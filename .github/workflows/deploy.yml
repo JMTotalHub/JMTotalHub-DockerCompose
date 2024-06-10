@@ -20,12 +20,18 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         script: |
-          if [ ! -d ".git" ]; then
-            sudo rm -rf *
-            git clone https://github.com/JMTotalHub/JMTotalHub-DockerCompose.git .
+          if [ -d "JMTotalHub-DockerCompose" ]; then
+            cd JMTotalHub-DockerCompose
+            if [ -d ".git" ]; then
+              sudo git pull origin main
+            else
+              cd ..
+              sudo rm -rf JMTotalHub-DockerCompose
+              git clone https://github.com/JMTotalHub/JMTotalHub-DockerCompose.git
+            fi
+          else
+            git clone https://github.com/JMTotalHub/JMTotalHub-DockerCompose.git
           fi
-          sudo git pull origin main
-          ls -al
 
     - name: docker compose 구동
       uses: appleboy/ssh-action@master
