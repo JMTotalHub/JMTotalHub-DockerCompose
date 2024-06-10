@@ -34,6 +34,7 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         script: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           export DATABASE_URL=${{ secrets.DATABASE_URL }}
           sudo -E docker-compose pull
           sudo -E docker-compose up -d --force-recreate
