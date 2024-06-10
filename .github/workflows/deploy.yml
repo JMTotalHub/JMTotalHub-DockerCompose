@@ -1,0 +1,39 @@
+name: dockercompose ec2 배포
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: 도커컴포즈 repo git pull
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        script: |
+          if [ ! -d ".git" ]; then
+            sudo rm -rf *
+            git clone https://github.com/JMTotalHub/JMTotalHub-DockerCompose.git .
+          fi
+          sudo git pull origin main
+          ls -al
+
+    - name: docker compose 구동
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        script: |
+          export DATABASE_URL=${{ secrets.DATABASE_URL }}
+          sudo -E docker-compose pull
+          sudo -E docker-compose up -d --force-recreate
