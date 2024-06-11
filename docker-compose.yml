@@ -12,7 +12,7 @@ services:
       - "3000:3000"
     environment:
       REACT_APP_ENV: ${REACT_APP_ENV}
-      REACT_APP_SERVER_URL: ${REACT_APP_SERVER_URL}
+      REACT_APP_SERVER_IP: ${REACT_APP_SERVER_IP}
   nginx:
     image: nginx:latest
     ports:
