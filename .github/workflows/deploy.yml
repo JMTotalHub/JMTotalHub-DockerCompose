@@ -45,8 +45,8 @@ jobs:
           export DATABASE_URL=${{ secrets.DATABASE_URL }}
           export REACT_APP_ENV=${{ secrets.REACT_APP_ENV }}
           export REACT_APP_SERVER_IP=${{ secrets.REACT_APP_SERVER_IP }}
-          export REDIS_PASSWORD=${{ secrets.REDIS_URL }}
-          export REDIS_PASSWORD=${{ secrets.REDIS_PORT }}
+          export REDIS_URL=${{ secrets.REDIS_URL }}
+          export REDIS_PORT=${{ secrets.REDIS_PORT }}
           export REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
           cd JMTotalHub-DockerCompose
           sudo -E docker-compose pull
